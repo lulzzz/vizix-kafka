@@ -46,9 +46,7 @@ echo "- Creating data topics"
 echo "----------------------------"
 echo
 create_data_topic ___v1___data1 32 # Edge Boxes(output) and Joiner(input).
-create_data_topic ___v1___data2 32 # Joiner(output) and Kafka Core Bridge(input).
-create_data_topic ___v1___data2___MnS 32 # Joiner(output) and Kafka Core Bridge(input).
-create_data_topic ___v1___data2___BP 32 # Joiner(output) and Kafka Core Bridge(input).
+create_data_topic ___v1___data2___mojix 32 # Joiner(output) and Kafka Core Bridge(input).
 create_data_topic ___v1___data3 32 # Kafka Core Bridge(output) Mongo Dao(input).
 
 # List all topics.

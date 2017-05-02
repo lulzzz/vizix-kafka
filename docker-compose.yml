@@ -33,6 +33,28 @@ services:
       volumes:
         - ./mysql:/var/lib/mysql
 
+    zookeeper:
+      image: zookeeper:3.4.9
+      ports:
+        - 2181:2181
+      volumes:
+        - ./zookeeper/data:/data
+        - ./zookeeper/datalog:/datalog
+
+    kafka:
+      image: mojix/vizix-docker-kafka:develop
+      ports:
+        - 9092:9092
+      environment:
+        # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.100.0.118:9092
+        KAFKA_DELETE_TOPIC_ENABLE: "true"
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_LOG_CLEANER_ENABLE: "true"
+        KAFKA_LOG_RETENTION_HOURS: 1
+      volumes:
+        - ./kafka/logs:/app/kafka/logs
+        - ./scripts:/scripts
+
     services:
       restart: always
       hostname: services
@@ -77,27 +99,6 @@ services:
         VIZIX_API_KEY: 7B4BCCDC
         VIZIX_ALEB_OUTPUTTOPIC: ___v1___data1
         VIZIX_ALEB_THERADS: 10
-
-    zookeeper:
-      image: zookeeper:3.4.9
-      ports:
-        - 2181:2181
-      volumes:
-        - ./zookeeper/data:/data
-        - ./zookeeper/datalog:/datalog
-
-    kafka:
-      image: mojix/vizix-docker-kafka:develop
-      ports:
-        - 9092:9092
-      environment:
-        # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.100.0.118:9092
-        KAFKA_DELETE_TOPIC_ENABLE: "true"
-        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-        KAFKA_LOG_CLEANER_ENABLE: "true"
-        KAFKA_LOG_RETENTION_HOURS: 1
-      volumes:
-        - ./kafka/logs:/app/kafka/logs
 
     thingjoiner:
       image: mojix/riot-core-bridges:feature_kafkastreams

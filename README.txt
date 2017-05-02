@@ -37,7 +37,10 @@ Pre-requisites
 7. create kafka topics
    docker-compose exec kafka bash
 
-   cd /app/kafka/bin
+   cd /scripts/
+   ./create-topics.sh
+   
+
 
 
 7. run services
