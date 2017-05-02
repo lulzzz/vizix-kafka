@@ -39,30 +39,55 @@ Pre-requisites
 
    cd /scripts/
    ./create-topics.sh
-   
 
-
-
-7. run services
+8. run services
    docker-compose up -d services
 
-8. populate db
+9. populate db
    docker-compose exec services bash
 
    cd /
    ./run.sh install retail kafka
 
-9. run ui
-   docker-compose up -d ui      
+10. run ui
+    docker-compose up -d ui      
 
-10. open vizix ui in web brower http://localhost
+11. open vizix ui in web brower http://localhost
 
-11. load vizix license
+12. load vizix license
 
-12. update connection settings (mostly hostnames)
+13. update connection settings (mostly hostnames)
     - kafka 
     - mongo 
     - mqtt
     - services
     - sql
 
+14. load kafka cache
+    docker-compose up -d console
+
+    docker-compose exec console bash
+
+    cp cacheLoaderTool.conf.template cacheLoaderTool.conf
+    vi cacheLoaderTool.conf
+
+    # update REST_HOST="services"
+
+15. enable kafka and restart services
+    # edit docker-compose.yml 
+    # set VIZIX_KAFKA_ENABLED to "true"
+
+    docker-compose stop services
+    docker-compose rm -f services
+    docker-compose up -d services
+
+16. run thingjoiner, cepprocessor and mongodao
+    docker-compose up -d thingjoiner
+    docker-compose up -d cepprocessor
+    docker-compose up -d mongodao
+
+17. run alebridge
+    docker-compose up -d alebridge
+
+17. send test blink
+    docker-compose exec console bash
