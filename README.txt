@@ -73,6 +73,8 @@ Pre-requisites
 
     # update REST_HOST="services"
 
+    ./cacheLoaderTool.sh
+
 15. enable kafka and restart services
     # edit docker-compose.yml 
     # set VIZIX_KAFKA_ENABLED to "true"
@@ -89,5 +91,5 @@ Pre-requisites
 17. run alebridge
     docker-compose up -d alebridge
 
-17. send test blink
+18. send test blink
     docker-compose exec console bash
