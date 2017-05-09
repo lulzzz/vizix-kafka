@@ -70,7 +70,7 @@ services:
         VIZIX_MYSQL_HOST: mysql
         VIZIX_MYSQL_PASSWORD: control123!
         VIZIX_HAZELCAST_DISTRIBUTED_ENABLE: "false"
-        VIZIX_KAFKA_ENABLED: "false"
+        VIZIX_KAFKA_ENABLED: "true"
 
     ui:
       restart: always
