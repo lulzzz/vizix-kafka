@@ -1,9 +1,9 @@
-#Installation guide
+# Installation guide
 
 ## 1. Pre-requisites
 
-* docker-compose 1.9.0+
-* valid vizix license
+- docker-compose 1.9.0+
+- valid vizix license
 
 ## 2. Enter to vizix-kafka directory 
 
