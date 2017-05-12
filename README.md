@@ -19,11 +19,11 @@ docker login
 
 ## 4. Set appropiate variables in .env file
 set values for:
-o VIZIX_SERVICES_IMAGE
-o VIZIX_BRIDGES_IMAGE
-o VIZIX_UI_IMAGE
-o KAFKA_ADDRESS
-o ZOOKEEPER_ADDRESS
+- VIZIX_SERVICES_IMAGE
+- VIZIX_BRIDGES_IMAGE
+- VIZIX_UI_IMAGE
+- KAFKA_ADDRESS
+- ZOOKEEPER_ADDRESS
 
 execute:
 ```
@@ -99,8 +99,8 @@ docker-compose up -d ui
 
 ## 12. open vizix ui in web brower http://localhost
 
-o Load vizix license
-o Follow google document for next steps 
+- Load vizix license
+- Follow google document for next steps 
 url: https://docs.google.com/document/d/1eLrwlqj8GruVMUeco0GhCDM8aLgICxVdZCOaHHAFjK8/edit#heading=h.dgwjw9jckso1
 
 ## 13. Load kafka cache
@@ -122,8 +122,8 @@ Execute:
 
 ## 14. Enable kafka and restart services
 Edit docker-compose.yml 
-o set VIZIX_KAFKA_ENABLED to "true"
-o set REST_API_KEY to "3T3BVTMTSG"
+- set VIZIX_KAFKA_ENABLED to "true"
+- set REST_API_KEY to "3T3BVTMTSG"
 ```
 docker-compose stop services
 docker-compose rm -f services
