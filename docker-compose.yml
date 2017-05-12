@@ -46,9 +46,9 @@ services:
       ports:
         - 9092:9092
       environment:
-        # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.100.0.118:9092
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://$KAFKA_ADDRESS:9092
         KAFKA_DELETE_TOPIC_ENABLE: "true"
-        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_ZOOKEEPER_CONNECT: $ZOOKEEPER_ADDRESS:2181
         KAFKA_LOG_CLEANER_ENABLE: "true"
         KAFKA_LOG_RETENTION_HOURS: 1
       volumes:
@@ -58,7 +58,7 @@ services:
     services:
       restart: always
       hostname: services
-      image: mojix/riot-core-services:feature_kafkastreams
+      image: ${VIZIX_SERVICES_IMAGE}
       ports:
         - "8080:8080"
         - "5701:5701"
@@ -75,7 +75,7 @@ services:
     ui:
       restart: always
       hostname: ui
-      image: mojix/riot-core-ui:feature_kafkastreams
+      image: ${VIZIX_UI_IMAGE}
       ports:
         - "80:80"
       environment:
@@ -83,48 +83,63 @@ services:
 
     alebridge:
       restart: always
-      image: mojix/riot-core-bridges:feature_kafkastreams
+      image: ${VIZIX_BRIDGES_IMAGE}
       hostname: alebridge
       ports:
         - "9090:9090"
       environment:
         VIZIX_BRIDGE_TYPE: alebridgemt 
         VIZIX_API_HOST: services
-        VIZIX_ALEB_CODE: ALEB
+        VIZIX_ALEB_CODE: PNLAleBridge
         VIZIX_ALEB_PORT: 9090
-        VIZIX_API_KEY: 7B4BCCDC
+        VIZIX_API_KEY: 3T3BVTMTSG
         VIZIX_ALEB_OUTPUTTOPIC: ___v1___data1
         VIZIX_ALEB_THERADS: 10
 
     thingjoiner:
       hostname: thingjoiner
-      image: mojix/riot-core-bridges:feature_kafkastreams
+      image: ${VIZIX_BRIDGES_IMAGE}
       environment:
         VIZIX_BRIDGE_TYPE: thingjoiner 
         VIZIX_API_HOST: services
-        VIZIX_API_KEY: 7B4BCCDC
+        VIZIX_API_KEY: 3T3BVTMTSG
         VIZIX_CORE_CODE: ThingJoiner
 
-    cepprocessor:
-      hostname: cepprocessor
-      image: mojix/riot-core-bridges:feature_kafkastreams
+    rulesprocessor:
+      hostname: rulesprocessor
+      image: ${VIZIX_BRIDGES_IMAGE}
       environment:
         VIZIX_BRIDGE_TYPE: kafkacorebridge
         VIZIX_API_HOST: services
-        VIZIX_CORE_CODE: CEPProcessor
-        VIZIX_API_KEY: 7B4BCCDC
+        VIZIX_CORE_CODE: RulesProcessor
+        VIZIX_API_KEY: 3T3BVTMTSG
 
-    mongodao:
-      hostname: mongodao
-      image: mojix/riot-core-bridges:feature_kafkastreams
+    mongoinjector:
+      hostname: mongoinjector
+      image: ${VIZIX_BRIDGES_IMAGE}
       environment:
         VIZIX_BRIDGE_TYPE: mongoingestor
         VIZIX_API_HOST: services
-        VIZIX_API_KEY : 7B4BCCDC
+        VIZIX_API_KEY : 3T3BVTMTSG
         VIZIX_CORE_CODE: MongoInjector
 
-    console:
-      image: mojix/riot-core-bridges:feature_kafkastreams
+    console-services:
+      image: ${VIZIX_SERVICES_IMAGE}
+      environment:
+        VIZIX_MONGO_PRIMARY: mongo:27017
+        VIZIX_MQTT_HOST: mosquitto
+        VIZIX_MYSQL_HOST: mysql
+        VIZIX_MYSQL_PASSWORD: control123!
+        VIZIX_HAZELCAST_DISTRIBUTED_ENABLE: "false"
+
+      entrypoint: 
+         - /bin/sh
+      hostname: console
+      stdin_open: true
+      tty: true
+
+    console-bridges:
+      image: ${VIZIX_BRIDGES_IMAGE}
       entrypoint: 
          - /bin/sh
       hostname: console
