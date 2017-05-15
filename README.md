@@ -37,9 +37,7 @@ docker-compose pull
 
 ## 6. Start basic containers
 ```
-docker-compose up -d mosquitto
-docker-compose up -d mysql
-docker-compose up -d mongo
+docker-compose up -d mosquitto mysql mongo
 ```
 
 ## 7. Start zookeeper and kafka
@@ -51,10 +49,7 @@ docker-compose up -d kafka
 
 ## 8. Init mongo db
 ```
-docker-compose exec mongo sh
-```
-```
-mongo
+docker-compose exec mongo mongo
 ```
 ```
 use admin
@@ -70,8 +65,7 @@ db.createUser({ user: "admin", pwd: "control123!", roles: ["userAdminAnyDatabase
 docker-compose exec kafka bash
 ```
 ```
-cd /scripts/
-./create-topics.sh
+/scripts/create-topics.sh
 ```
 
 ## 10. Make initial popdb and make initial setup in vizix platform
@@ -125,9 +119,7 @@ Edit docker-compose.yml
 - set VIZIX_KAFKA_ENABLED to "true"
 - set REST_API_KEY to "3T3BVTMTSG"
 ```
-docker-compose stop services
-docker-compose rm -f services
-docker-compose up -d services
+./restart-service.sh services
 ```
 
 ## 15. Start thingjoiner, cepprocessor and mongodao
