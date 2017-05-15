@@ -106,7 +106,7 @@ Update REST_HOST to "services"
 Update apropiate apikey. go to mysql execute query to find it.
 query to use is generally: select apikey, username from user0;
 
-Update also .yml file in all bridges
+Update also .env file.
 
 
 Execute:
@@ -117,8 +117,14 @@ Execute:
 ## 14. Enable kafka and restart services
 Edit docker-compose.yml 
 - set VIZIX_KAFKA_ENABLED to "true"
-- set REST_API_KEY to "3T3BVTMTSG"
+
+update compose config
 ```
+docker-compose config
+```
+
+restart services
+``` 
 ./restart-service.sh services
 ```
 
