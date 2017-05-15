@@ -52,20 +52,18 @@ docker-compose up -d kafka
 docker-compose exec mongo mongo
 ```
 ```
-use admin
-db.system.users.remove({})
-db.system.version.remove({})
-db.dropUser("admin")
-db.createRole( { role: "executeFunctions", privileges: [ { resource: { anyResource: true }, actions: [ "anyAction" ] } ], roles: [] } )
-db.createUser({ user: "admin", pwd: "control123!", roles: ["userAdminAnyDatabase", "executeFunctions"] })
+use admin;
+db.system.users.remove({});
+db.system.version.remove({});
+db.dropUser("admin");
+db.createRole( { role: "executeFunctions", privileges: [ { resource: { anyResource: true }, actions: [ "anyAction" ] } ], roles: [] } );
+db.createUser({ user: "admin", pwd: "control123!", roles: ["userAdminAnyDatabase", "executeFunctions"] });
+exit;
 ```
    
 ## 9. Create kafka topics
 ```
-docker-compose exec kafka bash
-```
-```
-/scripts/create-topics.sh
+docker-compose exec kafka /scripts/create-topics.sh
 ```
 
 ## 10. Make initial popdb and make initial setup in vizix platform
@@ -74,11 +72,7 @@ Verify that VIZIX_KAFKA_ENABLED variable is set to false in docker-compose.yml
 
 ```
 docker-compose up -d services
-docker-compose exec services bash
-```
-```
-cd /
-./run.sh install kafka
+docker-compose exec services /run.sh install kafka
 ```
 
 Now restart services so we can do initial setup in vizix platform 
@@ -108,6 +102,12 @@ cp cacheLoaderTool.conf.template cacheLoaderTool.conf
 vi cacheLoaderTool.conf
 ```
 Update REST_HOST to "services"
+
+Update apropiate apikey. go to mysql execute query to find it.
+query to use is generally: select apikey, username from user0;
+
+Update also .yml file in all bridges
+
 
 Execute:
 ```

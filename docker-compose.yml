@@ -92,7 +92,7 @@ services:
         VIZIX_API_HOST: services
         VIZIX_ALEB_CODE: PNLAleBridge
         VIZIX_ALEB_PORT: 9090
-        VIZIX_API_KEY: P1ICXNJBBS
+        VIZIX_API_KEY: QTPJDTUXSK
         VIZIX_ALEB_OUTPUTTOPIC: ___v1___data1
         VIZIX_ALEB_THERADS: 10
 
@@ -102,7 +102,7 @@ services:
       environment:
         VIZIX_BRIDGE_TYPE: thingjoiner 
         VIZIX_API_HOST: services
-        VIZIX_API_KEY: P1ICXNJBBS
+        VIZIX_API_KEY: QTPJDTUXSK
         VIZIX_CORE_CODE: ThingJoiner
       volumes:
         - ./kafka/ThingJoinerStore:/var/tmp/ThingJoiner/store
@@ -114,7 +114,7 @@ services:
         VIZIX_BRIDGE_TYPE: kafkacorebridge
         VIZIX_API_HOST: services
         VIZIX_CORE_CODE: RulesProcessor
-        VIZIX_API_KEY: P1ICXNJBBS
+        VIZIX_API_KEY: QTPJDTUXSK
       volumes:
         - ./kafka/RulesProcessorStore:/var/tmp/CEPProcessor/store
 
@@ -124,7 +124,7 @@ services:
       environment:
         VIZIX_BRIDGE_TYPE: mongoingestor
         VIZIX_API_HOST: services
-        VIZIX_API_KEY : P1ICXNJBBS
+        VIZIX_API_KEY : QTPJDTUXSK
         VIZIX_CORE_CODE: MongoInjector
       volumes:
         - ./kafka/MongoInjectorStore:/var/tmp/MongoInjector/store
