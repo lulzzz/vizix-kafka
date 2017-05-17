@@ -17,7 +17,7 @@ services:
       ports:
         - "27017:27017"
       volumes:
-        - ./mongo:/data/db
+        - ./volume/mongo:/data/db
 
     mysql:
       restart: always
@@ -31,15 +31,15 @@ services:
         MYSQL_DATABASE: riot_main
         MYSQL_ROOT_PASSWORD: control123!
       volumes:
-        - ./mysql:/var/lib/mysql
+        - ./volume/mysql:/var/lib/mysql
 
     zookeeper:
       image: zookeeper:3.4.9
       ports:
         - 2181:2181
       volumes:
-        - ./zookeeper/data:/data
-        - ./zookeeper/datalog:/datalog
+        - ./volume/zookeeper/data:/data
+        - ./volume/zookeeper/datalog:/datalog
 
     kafka:
       image: mojix/vizix-docker-kafka:develop
@@ -52,7 +52,7 @@ services:
         KAFKA_LOG_CLEANER_ENABLE: "true"
         KAFKA_LOG_RETENTION_HOURS: 1
       volumes:
-        - ./kafka/logs:/app/kafka/logs
+        - ./volume/kafka/logs:/app/kafka/logs
         - ./scripts:/scripts
 
     services:
@@ -105,7 +105,7 @@ services:
         VIZIX_API_KEY: ${API_KEY}
         VIZIX_CORE_CODE: ThingJoiner
       volumes:
-        - ./kafka/ThingJoinerStore:/var/tmp/ThingJoiner/store
+        - ./volume/ThingJoinerStore:/var/tmp/ThingJoiner/store
 
     rulesprocessor:
       hostname: rulesprocessor
@@ -116,7 +116,7 @@ services:
         VIZIX_CORE_CODE: RulesProcessor
         VIZIX_API_KEY: ${API_KEY}
       volumes:
-        - ./kafka/RulesProcessorStore:/var/tmp/CEPProcessor/store
+        - ./volume/RulesProcessorStore:/var/tmp/CEPProcessor/store
 
     mongoinjector:
       hostname: mongoinjector
@@ -127,7 +127,7 @@ services:
         VIZIX_API_KEY : ${API_KEY}
         VIZIX_CORE_CODE: MongoInjector
       volumes:
-        - ./kafka/MongoInjectorStore:/var/tmp/MongoInjector/store
+        - ./volume/MongoInjectorStore:/var/tmp/MongoInjector/store
 
     console-bridges:
       image: ${VIZIX_BRIDGES_IMAGE}

@@ -136,8 +136,9 @@ docker-compose up -d mongoinjector
 ```
 
 ## 16. Start alebridge
-    docker-compose up -d alebridge
-
+```
+docker-compose up -d alebridge
+```
 ## 17. Send test blink
 ```
 docker-compose exec console-bridges bash
@@ -159,4 +160,4 @@ and finally send blink
 # Optional Commands
 
 ## Remove volumes
-   sudo rm -rf kafka mongo mysql zookeeper
+   sudo rm -rf volume
