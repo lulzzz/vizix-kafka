@@ -60,10 +60,15 @@ db.createRole( { role: "executeFunctions", privileges: [ { resource: { anyResour
 db.createUser({ user: "admin", pwd: "control123!", roles: ["userAdminAnyDatabase", "executeFunctions"] });
 exit;
 ```
-   
+
+## 8.1. Start services installation mode
+```
+docker-compose up -d services
+```
+
 ## 9. Create kafka topics
 ```
-docker-compose exec kafka /scripts/create-topics.sh
+docker-compose exec services /run.sh kafka createTopics
 ```
 
 ## 10. Make initial popdb and make initial setup in vizix platform
