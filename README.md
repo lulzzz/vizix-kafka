@@ -35,116 +35,73 @@ docker-compose config
 docker-compose pull
 ```
 
-## 6. Start basic containers
-```
-docker-compose up -d mosquitto mysql mongo
-```
+## 6. Start and init basic containers
 
-## 7. Start zookeeper and kafka
+
+
 ```
+# Start mosquitto, mysql and mongo 
+docker-compose up -d mosquitto mysql mongo
+
+# init mongo
+docker-compose exec mongo mongo admin /scripts/init-mongo.js
+
+# Start kafka and zookeeper
 docker-compose up -d zookeeper
 sleep 10
 docker-compose up -d kafka
 ```
 
-## 8. Init mongo db
-```
-docker-compose exec mongo mongo
-```
-```
-use admin;
-db.system.users.remove({});
-db.system.version.remove({});
-db.dropUser("admin");
-db.createRole( { role: "executeFunctions", privileges: [ { resource: { anyResource: true }, actions: [ "anyAction" ] } ], roles: [] } );
-db.createUser({ user: "admin", pwd: "control123!", roles: ["userAdminAnyDatabase", "executeFunctions"] });
-exit;
-```
+## 7. Start services installation mode
+Note: before doing this step verify that VIZIX_KAFKA_ENABLED is set to false in docker-compose.yml. 
 
-## 8.1. Start services installation mode
 ```
 docker-compose up -d services
-```
-
-## 9. Create kafka topics
-```
+# create kafka topics
 docker-compose exec services /run.sh kafka createTopics
+# popdb
+docker-compose exec services /run.sh install
 ```
 
-## 10. Make initial popdb and make initial setup in vizix platform
-Important Note: We are goint to initiate services with no kafka support. 
-Verify that VIZIX_KAFKA_ENABLED variable is set to false in docker-compose.yml
-
-```
-docker-compose up -d services
-docker-compose exec services /run.sh install kafka
-```
-
-Now restart services so we can do initial setup in vizix platform 
+Now restart services and start ui so we can do initial setup in vizix platform 
 ```
 ./restart-service.sh services
-```
-
-## 11. Start UI
-```
 docker-compose up -d ui
 ```
 
-## 12. open vizix ui in web brower http://localhost
+## 8. Do setup in UI.
 
+- open http://localhost
 - Load vizix license
 - Follow google document for next steps 
 url: https://docs.google.com/document/d/1eLrwlqj8GruVMUeco0GhCDM8aLgICxVdZCOaHHAFjK8/edit#heading=h.dgwjw9jckso1
 
-## 13. Load kafka cache
+## 9. Load kafka cache
 ```
-docker-compose up -d console-bridges
-docker-compose exec console-bridges bash
-```
-```
-cd app
-cp cacheLoaderTool.conf.template cacheLoaderTool.conf
-vi cacheLoaderTool.conf
-```
-Update REST_HOST to "services"
-
-Update apropiate apikey. go to mysql execute query to find it.
-query to use is generally: select apikey, username from user0;
-
-Update also .env file.
-
-
-Execute:
-```
-./cacheLoaderTool.sh
+docker-compose exec services /run.sh kafka loadCache
 ```
 
-## 14. Enable kafka and restart services
+## 10. Enable kafka and restart services
 Edit docker-compose.yml 
 - set VIZIX_KAFKA_ENABLED to "true"
 
-update compose config
 ```
 docker-compose config
-```
-
-restart services
-``` 
 ./restart-service.sh services
 ```
 
-## 15. Start thingjoiner, cepprocessor and mongodao
+## 11. Start thingjoiner, cepprocessor and mongodao
 ```
 docker-compose up -d thingjoiner
 docker-compose up -d rulesprocessor
 docker-compose up -d mongoinjector
 ```
 
-## 16. Start alebridge
+## 12. Start alebridge
 ```
 docker-compose up -d alebridge
 ```
-## 17. Send test blink
+## 13. Send test blink
 ```
 docker-compose exec console-bridges bash
 ```
