@@ -38,7 +38,6 @@ docker-compose pull
 ## 6. Start and init basic containers
 
 
-
 ```
 # Start mosquitto, mysql and mongo 
 docker-compose up -d mosquitto mysql mongo
@@ -48,7 +47,6 @@ docker-compose exec mongo mongo admin /scripts/init-mongo.js
 
 # Start kafka and zookeeper
 docker-compose up -d zookeeper
-sleep 10
 docker-compose up -d kafka
 ```
 
@@ -61,9 +59,10 @@ docker-compose up -d services
 docker-compose exec services /run.sh kafka createTopics
 # popdb
 docker-compose exec services /run.sh install
+docker-compose exec services /run.sh kafka popdb
 ```
 
-Now restart services and start ui so we can do initial setup in vizix platform 
+Now restart services and start ui so we can do initial setup in vizix platform
 ```
 ./restart-service.sh services
 docker-compose up -d ui
@@ -74,7 +73,7 @@ docker-compose up -d ui
 - open http://localhost
 - Load vizix license
 - Follow google document for next steps 
-url: https://docs.google.com/document/d/1eLrwlqj8GruVMUeco0GhCDM8aLgICxVdZCOaHHAFjK8/edit#heading=h.dgwjw9jckso1
+url: https://docs.google.com/document/d/1q-_QE-GGbX8FspoXjdhM_id1U_iKRpjA3rtmrVh8Gxk/edit#heading=h.rw5buaie98nu
 
 ## 9. Load kafka cache
 ```
