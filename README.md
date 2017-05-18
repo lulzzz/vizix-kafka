@@ -51,7 +51,6 @@ docker-compose up -d kafka
 ```
 
 ## 7. Start services installation mode
-Note: before doing this step verify that VIZIX_KAFKA_ENABLED is set to false in docker-compose.yml. 
 
 ```
 docker-compose up -d services
@@ -60,6 +59,7 @@ docker-compose exec services /run.sh kafka createTopics
 # popdb
 docker-compose exec services /run.sh install
 docker-compose exec services /run.sh kafka popdb
+docker-compose exec services /run.sh kafka loadCache
 ```
 
 Now restart services and start ui so we can do initial setup in vizix platform
@@ -75,32 +75,18 @@ docker-compose up -d ui
 - Follow google document for next steps 
 url: https://docs.google.com/document/d/1q-_QE-GGbX8FspoXjdhM_id1U_iKRpjA3rtmrVh8Gxk/edit#heading=h.rw5buaie98nu
 
-## 9. Load kafka cache
-```
-docker-compose exec services /run.sh kafka loadCache
-```
-
-## 10. Enable kafka and restart services
-Edit docker-compose.yml 
-- set VIZIX_KAFKA_ENABLED to "true"
-
-```
-docker-compose config
-./restart-service.sh services
-```
-
-## 11. Start thingjoiner, cepprocessor and mongodao
+## 9. Start thingjoiner, cepprocessor and mongodao
 ```
 docker-compose up -d thingjoiner
 docker-compose up -d rulesprocessor
 docker-compose up -d mongoinjector
 ```
 
-## 12. Start alebridge
+## 10. Start alebridge
 ```
 docker-compose up -d alebridge
 ```
-## 13. Send test blink
+## 11. Send test blink
 ```
 docker-compose exec console-bridges bash
 ```
