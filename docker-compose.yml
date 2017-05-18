@@ -18,6 +18,7 @@ services:
         - "27017:27017"
       volumes:
         - ./volume/mongo:/data/db
+        - ./scripts:/scripts
 
     mysql:
       restart: always
@@ -70,7 +71,9 @@ services:
         VIZIX_MYSQL_HOST: mysql
         VIZIX_MYSQL_PASSWORD: control123!
         VIZIX_HAZELCAST_DISTRIBUTED_ENABLE: "false"
-        VIZIX_KAFKA_ENABLED: "false"
+        VIZIX_KAFKA_ENABLED: "true"
+        VIZIX_KAFKA_ZOOKEEPER: $ZOOKEEPER_ADDRESS:2181
+        VIZIX_KAFKA_SERVERS: $KAFKA_ADDRESS:9092
 
     ui:
       restart: always
