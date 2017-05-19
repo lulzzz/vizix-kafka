@@ -119,7 +119,7 @@ services:
         VIZIX_CORE_CODE: RulesProcessor
         VIZIX_API_KEY: ${API_KEY}
       volumes:
-        - ./volume/RulesProcessorStore:/var/CEPProcessor/store
+        - ./volume/RulesProcessorStore:/var/RulesProcessor/store
 
     mongoinjector:
       hostname: mongoinjector
