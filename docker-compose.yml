@@ -108,7 +108,7 @@ services:
         VIZIX_API_KEY: ${API_KEY}
         VIZIX_CORE_CODE: ThingJoiner
       volumes:
-        - ./volume/ThingJoinerStore:/var/tmp/ThingJoiner/store
+        - ./volume/ThingJoinerStore:/var/ThingJoiner/store
 
     rulesprocessor:
       hostname: rulesprocessor
@@ -119,7 +119,7 @@ services:
         VIZIX_CORE_CODE: RulesProcessor
         VIZIX_API_KEY: ${API_KEY}
       volumes:
-        - ./volume/RulesProcessorStore:/var/tmp/CEPProcessor/store
+        - ./volume/RulesProcessorStore:/var/CEPProcessor/store
 
     mongoinjector:
       hostname: mongoinjector
@@ -130,7 +130,7 @@ services:
         VIZIX_API_KEY : ${API_KEY}
         VIZIX_CORE_CODE: MongoInjector
       volumes:
-        - ./volume/MongoInjectorStore:/var/tmp/MongoInjector/store
+        - ./volume/MongoInjectorStore:/var/MongoInjector/store
 
     console-bridges:
       image: ${VIZIX_BRIDGES_IMAGE}
