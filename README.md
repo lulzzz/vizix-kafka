@@ -88,6 +88,7 @@ docker-compose up -d alebridge
 ```
 ## 11. Send test blink
 ```
+docker-compose up -d console-bridges
 docker-compose exec console-bridges bash
 ```
 
