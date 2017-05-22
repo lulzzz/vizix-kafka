@@ -44,7 +44,9 @@ docker-compose up -d mongo
 docker-compose exec mongo mongo admin /scripts/init-mongo.js
 
 # Start remaining basic components
-docker-compose up -d mysql mosquitto zookeeper kafka
+docker-compose up -d mysql
+docker-compose up -d mosquitto
+docker-compose up -d kafka # will start zookeeper too
 ```
 
 ## 7. Start services installation mode
