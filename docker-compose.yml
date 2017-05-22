@@ -44,6 +44,8 @@ services:
 
     kafka:
       image: mojix/vizix-docker-kafka:develop
+      depends_on:
+        - zookeeper
       ports:
         - 9092:9092
       environment:
@@ -60,9 +62,15 @@ services:
       restart: always
       hostname: services
       image: ${VIZIX_SERVICES_IMAGE}
+      depends_on:
+        - mysql
+        - mongo
+        - kafka
+        - mosquitto
       ports:
         - "8080:8080"
         - "5701:5701"
+#        - "8849:8849"
       environment:
         #MEM_XMS: ${MIN_MEMORY}
         #MEM_XMX: ${MAX_MEMORY}
@@ -74,11 +82,14 @@ services:
         VIZIX_KAFKA_ENABLED: "true"
         VIZIX_KAFKA_ZOOKEEPER: $ZOOKEEPER_ADDRESS:2181
         VIZIX_KAFKA_SERVERS: $KAFKA_ADDRESS:9092
+#        JAVA_OPTS: -agentpath:/app/jprofiler/bin/linux-x64/libjprofilerti.so=nowait
 
     ui:
       restart: always
       hostname: ui
       image: ${VIZIX_UI_IMAGE}
+      depends_on:
+        - services
       ports:
         - "80:80"
       environment:
@@ -87,6 +98,9 @@ services:
     alebridge:
       restart: always
       image: ${VIZIX_BRIDGES_IMAGE}
+      depends_on:
+        - services
+        - kafka
       hostname: alebridge
       ports:
         - "9090:9090"
@@ -102,6 +116,9 @@ services:
     thingjoiner:
       hostname: thingjoiner
       image: ${VIZIX_BRIDGES_IMAGE}
+      depends_on:
+        - services
+        - kafka
       environment:
         VIZIX_BRIDGE_TYPE: thingjoiner 
         VIZIX_API_HOST: services
@@ -113,6 +130,9 @@ services:
     rulesprocessor:
       hostname: rulesprocessor
       image: ${VIZIX_BRIDGES_IMAGE}
+      depends_on:
+        - services
+        - kafka
       environment:
         VIZIX_BRIDGE_TYPE: kafkacorebridge
         VIZIX_API_HOST: services
@@ -124,6 +144,9 @@ services:
     mongoinjector:
       hostname: mongoinjector
       image: ${VIZIX_BRIDGES_IMAGE}
+      depends_on:
+        - services
+        - kafka
       environment:
         VIZIX_BRIDGE_TYPE: mongoingestor
         VIZIX_API_HOST: services
