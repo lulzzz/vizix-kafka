@@ -39,15 +39,12 @@ docker-compose pull
 
 
 ```
-# Start mosquitto, mysql and mongo 
-docker-compose up -d mosquitto mysql mongo
-
-# init mongo
+# Start and init mongo 
+docker-compose up -d mongo
 docker-compose exec mongo mongo admin /scripts/init-mongo.js
 
-# Start kafka and zookeeper
-docker-compose up -d zookeeper
-docker-compose up -d kafka
+# Start remaining basic components
+docker-compose up -d mysql mosquitto zookeeper kafka
 ```
 
 ## 7. Start services installation mode
