@@ -97,7 +97,7 @@ CS,-118.443969,34.048092,0.0,20.0,ft
 LOC, 00:00:00,TEST0001,30,50,0,LR5,x3ed9371
 ```
 
-Edit alebridge.sh and replace "localhost" with "alebridge"
+Edit aledata.sh and replace "localhost" with "alebridge"
 
 and finally send blink
 ```
