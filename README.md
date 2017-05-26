@@ -58,7 +58,6 @@ docker-compose exec services /run.sh kafka createTopics
 # popdb
 docker-compose exec services /run.sh install
 docker-compose exec services /run.sh kafka popdb
-docker-compose exec services /run.sh kafka loadCache
 ```
 
 Now restart services and start ui so we can do initial setup in vizix platform
@@ -74,18 +73,24 @@ docker-compose up -d ui
 - Follow google document for next steps 
 url: https://docs.google.com/document/d/1q-_QE-GGbX8FspoXjdhM_id1U_iKRpjA3rtmrVh8Gxk/edit#heading=h.rw5buaie98nu
 
-## 9. Start thingjoiner, cepprocessor and mongodao
+## 9. Load Kafka cache
+```
+docker-compose exec services /run.sh kafka loadCache
+./restart-service.sh services
+```
+
+## 10. Start thingjoiner, cepprocessor and mongodao
 ```
 docker-compose up -d thingjoiner
 docker-compose up -d rulesprocessor
 docker-compose up -d mongoinjector
 ```
 
-## 10. Start alebridge
+## 11. Start alebridge
 ```
 docker-compose up -d alebridge
 ```
-## 11. Send test blink
+## 12. Send test blink
 ```
 docker-compose up -d console-bridges
 docker-compose exec console-bridges bash
