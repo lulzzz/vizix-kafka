@@ -56,7 +56,7 @@ docker-compose up -d services
 # create kafka topics
 docker-compose exec services /run.sh kafka createTopics
 # popdb
-docker-compose exec services /run.sh install
+docker-compose exec services /run.sh install kafka clean ## under review
 docker-compose exec services /run.sh kafka popdb
 ```
 
