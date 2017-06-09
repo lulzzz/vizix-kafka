@@ -136,7 +136,7 @@ services:
       environment:
         VIZIX_BRIDGE_TYPE: kafkacorebridge
         VIZIX_API_HOST: services
-        VIZIX_CORE_CODE: RulesProcessor
+        VIZIX_CORE_CODE: RulesProcessorMojix
         VIZIX_API_KEY: ${API_KEY}
       volumes:
         - ./volume/RulesProcessorStore:/var/RulesProcessor/store
