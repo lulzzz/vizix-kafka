@@ -155,6 +155,16 @@ services:
       volumes:
         - ./volume/MongoInjectorStore:/var/MongoInjector/store
 
+    kafkacorebridge:
+      hostname: kafkacorebridge
+      image: ${VIZIX_BRIDGES_IMAGE}
+      environment:
+        VIZIX_BRIDGE_TYPE: kafkacorebridge
+        VIZIX_KAFKA_SERVERS: $KAFKA_ADDRESS:9092
+        VIZIX_KAFKA_CODE: KCB
+      volumes:
+        - ./volume/KafkaCoreBridge:/var/KafkaCoreBridge/store
+
     console-bridges:
       image: ${VIZIX_BRIDGES_IMAGE}
       entrypoint: 
